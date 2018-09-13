@@ -3,7 +3,7 @@
 3. Select Users and permissions
 4. Click on the Service accounts tab.
 5. Under Firebase Admin SDK, choose Node.js. Generate new private key. Download it.
-6. Move it to `functions`. Rename to `service_accounts.json`.
+6. Move it to `functions`. Rename to `service_account.json`.
 7. In `functions`, run `npm install`
 8. `./run.sh`
 

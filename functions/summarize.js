@@ -23,6 +23,10 @@ function _summarizeArray(collectionRef, parts, itemsKey) {
         const fields = parts.concat([item.id]);
         item.canonicalId = _sanitize(fields.join('|'));
 
+        if (itemsKey === 'contests') {
+          item.params = _generateContestParams(fields[1]);
+        }
+
         items.push(item);
       });
       const data = {};
@@ -33,6 +37,26 @@ function _summarizeArray(collectionRef, parts, itemsKey) {
 
 function _sanitize(id) {
   return id.split('/').join(',')
+}
+
+function _generateContestParams(division) {
+  const params = {};
+  division.split(',').forEach(level => {
+    if (level.indexOf(':') !== -1) {
+      [key, value] = level.split(':');
+      params['type'] = key;
+
+      if (key === 'state') {
+        params['state'] = value;
+      }
+
+      const number = parseInt(value);
+      if (!isNaN(number)) {
+        params['district-number'] = number;
+      }
+    }
+  });
+  return params;
 }
 
 const ocd = process.argv[2];

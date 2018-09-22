@@ -14,19 +14,19 @@ admin.initializeApp({
 function _summarizeArray(collectionRef, parts, itemsKey) {
   return collectionRef.get()
     .then(querySnapshot => {
+      console.log('Summarizing ' + collectionRef.parent.path);
       const items = [];
       querySnapshot.forEach(itemSnap => {
         const item = itemSnap.data();
         item.id = itemSnap.ref.id;
 
-        parts.push(item.id);
-        item.canonicalId = _sanitize(parts.join('|'));
+        const fields = parts.concat([item.id]);
+        item.canonicalId = _sanitize(fields.join('|'));
 
         items.push(item);
       });
       const data = {};
       data[itemsKey] = items.sort((a, b) => a.orderOnBallot - b.orderOnBallot);
-      console.log('Summarizing ' + collectionRef.parent.path);
       return collectionRef.parent.set(data, {merge: true});
     });
 }

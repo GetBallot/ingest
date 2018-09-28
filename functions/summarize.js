@@ -52,7 +52,7 @@ function _generateContestParams(division) {
 
       const number = parseInt(value);
       if (!isNaN(number)) {
-        params['district-number'] = number;
+        params['number'] = number;
       }
     }
   });
